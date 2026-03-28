@@ -1,10 +1,14 @@
 # Personal Finance Balance Sheet Tool (Python)
 
 This project is a **simple Python tool** to create a personal balance sheet (similar to a company balance sheet, but easier) and calculate your **free cash flow**.
+It uses **Euro (EUR)** by default and also lets you choose other currencies.
+It is primarily designed for **young adults (ages 22-35)**.
 
 ## What this tool does
 
 - Collects your personal finance numbers through an easy command-line prompt.
+- Asks age first and is optimized for ages 22-35.
+- Treats retirement accounts and property as optional (defaults to not included unless you confirm).
 - Shows your:
   - Total Assets
   - Total Liabilities
@@ -70,6 +74,24 @@ python3 personal_balance_sheet.py
 
 Then enter your values when prompted.
 
+By default, the script formats all amounts in **Euro (EUR)**.
+
+To choose another currency, use:
+
+```bash
+python3 personal_balance_sheet.py --currency USD
+```
+
+Supported currency codes:
+
+- `EUR` (default)
+- `USD`
+- `GBP`
+- `INR`
+- `JPY`
+- `CAD`
+- `AUD`
+
 ---
 
 ## Quick demo mode (optional)
@@ -80,11 +102,21 @@ If you want to see sample output quickly:
 python3 personal_balance_sheet.py --quick-example
 ```
 
+You can combine quick demo mode with a currency selection:
+
+```bash
+python3 personal_balance_sheet.py --quick-example --currency EUR
+```
+
 ---
 
 ## Example usage flow
 
 1. Run the script.
+2. Enter your age.
+3. Confirm whether you have retirement accounts and/or own property.
+4. Enter all requested amounts.
+5. Read the printed report:
 2. Enter all amounts.
 3. Read the printed report:
    - Assets section
@@ -96,6 +128,7 @@ python3 personal_balance_sheet.py --quick-example
 
 ## Notes
 
+- Enter values in your selected currency.
 - Enter values in dollars.
 - Do not use negative numbers.
 - You can rerun the script anytime to track progress monthly.
