@@ -20,6 +20,9 @@ SUPPORTED_CURRENCIES = {
 @dataclass
 class BalanceSheet:
     age: int
+
+@dataclass
+class BalanceSheet:
     cash_and_bank: float
     investments: float
     retirement_accounts: float
@@ -68,6 +71,9 @@ class BalanceSheet:
 def prompt_amount(label: str, currency_symbol: str) -> float:
     while True:
         raw = input(f"{label}: {currency_symbol}").strip().replace(",", "")
+def prompt_amount(label: str) -> float:
+    while True:
+        raw = input(f"{label}: $").strip().replace(",", "")
         try:
             value = float(raw)
             if value < 0:
@@ -182,6 +188,55 @@ def print_report(sheet: BalanceSheet, currency_code: str, currency_symbol: str) 
     print("\nFREE CASH FLOW")
     print(f"  Monthly Free Cash Flow    : {as_currency(sheet.monthly_free_cash_flow, currency_symbol)}")
     print(f"  Yearly Free Cash Flow     : {as_currency(sheet.yearly_free_cash_flow, currency_symbol)}")
+def collect_inputs() -> BalanceSheet:
+    print("\nEnter your amounts below. Use monthly values for income and expenses.\n")
+
+    return BalanceSheet(
+        cash_and_bank=prompt_amount("Cash + bank accounts"),
+        investments=prompt_amount("Investments (brokerage, stocks, ETFs, etc.)"),
+        retirement_accounts=prompt_amount("Retirement accounts (401(k), IRA, etc.)"),
+        real_estate_value=prompt_amount("Real estate market value"),
+        other_assets=prompt_amount("Other assets"),
+        credit_card_debt=prompt_amount("Credit card debt"),
+        loans=prompt_amount("Loans (student, auto, personal)"),
+        mortgage_balance=prompt_amount("Mortgage balance"),
+        other_liabilities=prompt_amount("Other liabilities"),
+        monthly_income=prompt_amount("Monthly take-home income"),
+        monthly_expenses=prompt_amount("Monthly living expenses"),
+        monthly_debt_payments=prompt_amount("Monthly debt payments (minimums + EMI)"),
+    )
+
+
+def as_currency(amount: float) -> str:
+    return f"${amount:,.2f}"
+
+
+def print_report(sheet: BalanceSheet) -> None:
+    print("\n" + "=" * 58)
+    print("PERSONAL FINANCE BALANCE SHEET")
+    print("=" * 58)
+
+    print("\nASSETS")
+    print(f"  Cash + bank accounts      : {as_currency(sheet.cash_and_bank)}")
+    print(f"  Investments               : {as_currency(sheet.investments)}")
+    print(f"  Retirement accounts       : {as_currency(sheet.retirement_accounts)}")
+    print(f"  Real estate               : {as_currency(sheet.real_estate_value)}")
+    print(f"  Other assets              : {as_currency(sheet.other_assets)}")
+    print(f"  Total Assets              : {as_currency(sheet.total_assets)}")
+
+    print("\nLIABILITIES")
+    print(f"  Credit card debt          : {as_currency(sheet.credit_card_debt)}")
+    print(f"  Loans                     : {as_currency(sheet.loans)}")
+    print(f"  Mortgage balance          : {as_currency(sheet.mortgage_balance)}")
+    print(f"  Other liabilities         : {as_currency(sheet.other_liabilities)}")
+    print(f"  Total Liabilities         : {as_currency(sheet.total_liabilities)}")
+
+    print("\nNET WORTH")
+    print(f"  Net Worth (Assets - Liabilities): {as_currency(sheet.net_worth)}")
+
+    print("\nFREE CASH FLOW")
+    print(f"  Monthly Free Cash Flow    : {as_currency(sheet.monthly_free_cash_flow)}")
+    print(f"  Yearly Free Cash Flow     : {as_currency(sheet.yearly_free_cash_flow)}")
 
     if sheet.monthly_free_cash_flow < 0:
         print("\nNote: Your free cash flow is negative. Review expenses and debt payments.")
@@ -217,6 +272,9 @@ def main() -> None:
     if args.quick_example:
         sheet = BalanceSheet(
             age=28,
+
+    if args.quick_example:
+        sheet = BalanceSheet(
             cash_and_bank=8000,
             investments=25000,
             retirement_accounts=42000,
@@ -234,6 +292,9 @@ def main() -> None:
         sheet = collect_inputs(currency_symbol)
 
     print_report(sheet, args.currency, currency_symbol)
+        sheet = collect_inputs()
+
+    print_report(sheet)
 
 
 if __name__ == "__main__":

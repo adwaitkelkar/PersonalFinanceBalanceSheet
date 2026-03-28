@@ -117,6 +117,8 @@ python3 personal_balance_sheet.py --quick-example --currency EUR
 3. Confirm whether you have retirement accounts and/or own property.
 4. Enter all requested amounts.
 5. Read the printed report:
+2. Enter all amounts.
+3. Read the printed report:
    - Assets section
    - Liabilities section
    - Net Worth
@@ -127,5 +129,6 @@ python3 personal_balance_sheet.py --quick-example --currency EUR
 ## Notes
 
 - Enter values in your selected currency.
+- Enter values in dollars.
 - Do not use negative numbers.
 - You can rerun the script anytime to track progress monthly.
