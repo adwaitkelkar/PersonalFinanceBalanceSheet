@@ -70,6 +70,12 @@ class BalanceSheet:
 
 def prompt_amount(label: str, currency_symbol: str) -> float:
     while True:
+        raw = input(f"{label}: {currency_symbol}").strip()
+        normalized = raw.replace(",", "").replace(" ", "")
+        for symbol in set(SUPPORTED_CURRENCIES.values()):
+            normalized = normalized.replace(symbol, "")
+        try:
+            value = float(normalized)
         raw = input(f"{label}: {currency_symbol}").strip().replace(",", "")
         try:
             value = float(raw)
