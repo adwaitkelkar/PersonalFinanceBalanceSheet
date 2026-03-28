@@ -47,6 +47,31 @@ class BalanceSheetTests(unittest.TestCase):
         self.assertIn("Monthly Free Cash Flow", output)
         self.assertIn("Currency: USD ($)", output)
 
+    def test_collect_inputs_default_currency_argument_is_optional(self):
+        with patch(
+            "builtins.input",
+            side_effect=[
+                "28",  # age
+                "n",  # retirement account?
+                "n",  # property ownership?
+                "1000",  # cash_and_bank
+                "500",  # investments
+                "100",  # other_assets
+                "50",  # credit_card_debt
+                "200",  # loans
+                "0",  # other_liabilities
+                "3000",  # monthly_income
+                "2000",  # monthly_expenses
+                "300",  # monthly_debt_payments
+            ],
+        ):
+            sheet = pbs.collect_inputs()
+
+        self.assertEqual(sheet.age, 28)
+        self.assertEqual(sheet.retirement_accounts, 0.0)
+        self.assertEqual(sheet.real_estate_value, 0.0)
+        self.assertEqual(sheet.mortgage_balance, 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()

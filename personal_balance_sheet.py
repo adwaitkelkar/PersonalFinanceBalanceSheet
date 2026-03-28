@@ -128,6 +128,9 @@ def prompt_age() -> int:
             continue
 
         return age
+
+
+def collect_inputs(currency_symbol: str = "€") -> BalanceSheet:
             if age < 18 or age > 100:
                 print("Please enter a realistic age between 18 and 100.")
                 continue
